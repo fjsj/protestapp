@@ -34,6 +34,9 @@
       <div class="row-steps-fluid">
         <div class="step-header-full step3">
           <h3>Passo 3: confira os eventos</h3>
+          {{#unless geolocation}}
+            <h4>(para maior precisão nos eventos, aceite a permissão para mostrar sua localização)</h4>
+          {{/unless}}
         </div>
         <div class="step-fluid today">
           {{> todayEvents}}

@@ -170,8 +170,11 @@ Facebook = (function () {
     sessionSet("datesAndEvents", datesAndEvents);
   };
 
-  Meteor.subscribe("all-events");
   Events = new Meteor.Collection("events");
+  Meteor.autorun(function () {
+    Meteor.subscribe("near-events", Geolocation.get());
+  });
+
   var getEventsByDate = function (dateKey) {
     var datesAndEvents = sessionGetOrNull("datesAndEvents");
     if (datesAndEvents) {
