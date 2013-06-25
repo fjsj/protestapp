@@ -215,10 +215,12 @@ body {
 }
 
 .today .day-content {
+    border-left: 6px #008763 solid;
     min-height: 4em;
 }
 
 .tomorrow .day-content {
+    border-left: 6px #c59b1e solid;
     min-height: 4em;
 }
 
