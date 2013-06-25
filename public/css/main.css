@@ -81,7 +81,7 @@ body {
 }
 
 .hero-background {
-    background: url(/img/NY_HDR_1200x800.jpg) no-repeat center center scroll;
+    background: url(/img/recife.jpg) no-repeat center center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -113,6 +113,8 @@ body {
     font-family: "Convergence", "PT Sans", "Segoe UI", sans-serif;
     font-size: 48px;
     margin-top: 6px;
+    text-shadow: 3px 3px #000c3c;
+    color: white;
 }
 
 .hero-unit h2 {
@@ -348,9 +350,6 @@ footer a:hover {
     .navbar {
         width: 1170px;
     }
-    .hero-background {
-        background-position: 0 -136px;
-    }
     .step-fluid .day-content .event-info .event-description .event-name h4,
     .step-fluid .day-content .event-info .event-description .event-location {
         overflow: hidden;
@@ -409,6 +408,7 @@ footer a:hover {
     .hero-unit h1 {
         font-family: "Convergence", "PT Sans", "Segoe UI", sans-serif;
         font-size: 20px;
+        text-shadow: 2px 2px #000c3c;
     }
     .row-steps-fluid {
         display: block;
