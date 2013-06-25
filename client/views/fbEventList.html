@@ -1,0 +1,59 @@
+<template name="todayEvents">
+  {{#with todayContext}}
+    {{> fbEventList}}
+  {{/with}}
+</template>
+
+<template name="tomorrowEvents">
+  {{#with tomorrowContext}}
+    {{> fbEventList}}
+  {{/with}}
+</template>
+
+<template name="fbEventList">
+  <div class="step-header"><h3><i class="icon-calendar pull-left"></i> {{currentDate}}</h3></div>
+  <div class="day-content">
+    {{#if isLogged}}
+      {{#ifIsNull fbEvents}}
+        <div class="row-fluid">
+          <div class="events-info-message">
+            <i class="icon-spinner icon-spin icon-2x pull-left"></i> {{trans "Loading events..."}}
+          </div>
+        </div>
+      {{else}}
+        {{#each fbEvents}}
+          <div class="event-info">
+            <div class="event-picture">
+              <a href="/event/{{formatDateAsKey start_time}}/{{id}}"><img src="{{picture.data.url}}" alt="{{name}}"></a>
+            </div>
+            <div class="event-description">
+              <div class="event-name" title="{{name}}">
+                <h4><a href="/event/{{formatDateAsKey start_time}}/{{id}}">{{name}}</a></h4>
+              </div>
+              <div class="event-row event-time">
+                <i class="icon-time"></i> {{formatDate start_time}}
+              </div>
+              <div class="event-row event-location" title="{{location}}">
+                <i class="icon-map-marker"></i> {{location}}
+              </div>
+              <!--<div class="event-row event-ratio">
+                <i class="female"></i> 50%
+                <i class="male"></i> 50%
+              </div>-->
+            </div>
+          </div>
+        {{else}}
+          <div class="events-info-message">
+            <i class="icon-check-empty icon-2x pull-left"></i> {{trans "No events found at this date :("}}
+          </div>
+        {{/each}}
+      {{/ifIsNull}}
+    {{else}}
+      <div class="row-fluid">
+        <div class="events-info-message">
+          <i class="icon-facebook-sign icon-2x pull-left"></i> {{trans "Sign in with your Facebook to see events"}}
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</template>

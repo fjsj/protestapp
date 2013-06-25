@@ -1,0 +1,70 @@
+<template name="fbEvent">
+  <div class="event-detailed-info">
+    <div class="hero-background">
+      <div class="hero-unit container-shadow">
+        <div class="event-picture">
+          <img src="{{picture.data.url}}" alt="{{name}}">
+        </div><div class="event-data">
+          <h1>{{name}}</h1>
+          <h2><i class="icon-map-marker"></i> {{location}}</h2>
+          <div class="event-time"><i class="icon-time"></i> {{formatDate start_time}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-steps-fluid">
+      <div class="step-header-full step3">
+        <h3>{{trans "Step 4: event information"}}</h3>
+      </div>
+      <div class="step-fluid place-date-time">
+        <div class="step-header"><h3><i class="icon-tags pull-left"></i> {{trans "Details"}}</h3></div>
+        <div class="event-content">
+          <div class="event-content-row event-ratio">
+            <i class="female"></i> {{#ifIsNull maleRatio}}?{{else}}{{femaleRatio maleRatio}}%{{/ifIsNull}}
+            <i class="male"></i> {{#ifIsNull maleRatio}}?{{else}}{{maleRatio}}%{{/ifIsNull}}
+          </div>
+          <div class="event-content-row facebook-link" title="{{name}}">
+            <i class="icon-facebook-sign icon-2x"></i> <a href="https://www.facebook.com/events/{{id}}" target="_blank"><span class="event-data-text">{{trans "view on Facebook"}}</a></span>
+          </div>
+          {{#if description}}
+          <div class="event-content-row event-full-description">
+            <i class="icon-file-alt icon-2x"></i> {{trans "Description"}}:
+            <p>{{nl2br description}}</p>
+          </div>
+          {{/if}}
+        </div>
+      </div><div class="step-fluid event-attendees">
+        <div class="step-header"><h3><i class="icon-group pull-left"></i> {{trans "Attending"}}</h3></div>
+        <div class="event-content">
+          {{#ifIsNull attendees}}
+            <div class="row-fluid">
+              <div class="attendees-info-message">
+                <div class="event-content-row">
+                  <i class="icon-spinner icon-spin icon-2x"></i> {{trans "Loading..."}}
+                </div>
+              </div>
+            </div>
+          {{else}}
+            {{#each attendees}}
+              <div class="event-attendee">
+                <div class="attendee-picture">
+                  <a href="https://www.facebook.com/{{id}}" target="_blank"><img src="{{picture.data.url}}" alt="{{name}}"></a>
+                </div><div class="attendee-info">
+                  <a href="https://www.facebook.com/{{id}}" target="_blank">{{name}}</a>
+                </div>
+              </div>
+            {{else}}
+              <div class="row-fluid">
+                <div class="attendees-info-message">
+                  <div class="event-content-row">
+                    <i class="icon-check-empty icon-2x"></i> {{trans "No attendees found"}}
+                  </div>
+                </div>
+              </div>
+            {{/each}}
+          {{/ifIsNull}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

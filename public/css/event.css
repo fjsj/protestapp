@@ -1,0 +1,126 @@
+.event-detailed-info .hero-unit {
+    padding: 0;
+    overflow: hidden;
+}
+
+.event-detailed-info .event-picture img {
+    float: left;
+    width: 160px;
+    height: 160px;
+    vertical-align: top;
+}
+
+.event-detailed-info .event-data {
+    margin-left: 175px;
+    margin-right: 10px;
+}
+
+.event-detailed-info .event-data h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.event-detailed-info .event-data i {
+    width: 1em;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
+.event-detailed-info .place-date-time .step-header {
+    border-left: 6px #b73700 solid;
+    background-color: #ff5400;
+    color: white;
+}
+
+.event-detailed-info .place-date-time .event-content {
+    border-left: 6px #b73700 solid;
+    padding: 1em;
+    font-size: 18px;
+}
+
+.event-detailed-info .event-attendees .step-header {
+    border-left: 6px #211f30 solid;
+    background-color: #373159;
+    color: white;
+}
+
+.event-detailed-info .event-attendees .event-content {
+    border-left: 6px #211f30 solid;
+    font-size: 18px;
+    padding-bottom: 2em;
+}
+
+.event-detailed-info .event-content-row {
+    margin-bottom: 10px;
+}
+
+.event-detailed-info .event-content-row i {
+    vertical-align: middle;
+    width: 1em;
+    display: inline-block;
+    text-align: center;
+}
+
+.event-detailed-info .event-content-row i.male, .event-detailed-info .event-content-row i.female {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+}
+
+.event-detailed-info .male {
+    background-image: url("/img/male32.png");
+    margin-left: 10px;
+}
+
+.event-detailed-info .female {
+    background-image: url("/img/female32.png");
+}
+
+.event-detailed-info .event-full-description p {
+    margin-left: 4px;
+}
+
+.event-detailed-info .attendees-info-message {
+    padding: 1em;
+}
+
+.event-detailed-info .event-attendee {
+    border-bottom: 1px #cecece solid;
+}
+
+.event-detailed-info .event-attendee:last-child {
+    border-bottom: none;
+}
+
+.event-detailed-info .event-attendee .attendee-picture {
+    display: inline-block;
+}
+
+.event-detailed-info .event-attendee .attendee-picture img {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.event-detailed-info .event-attendee .attendee-info {
+    display: inline-block;
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 979px) {
+    .step-fluid .event-content {
+        min-height: auto !important;
+    }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+    .step-fluid .event-content {
+        min-height: auto !important;
+    }
+}
