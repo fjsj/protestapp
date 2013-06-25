@@ -187,7 +187,7 @@ Facebook = (function () {
       var startMoment = moment(dateKey, SelectedDate.getKeyFormat());
       var start = startMoment.toDate();
       var end = startMoment.clone().add('days', 1).toDate();
-      return Events.find({ start_time: { '$gte': start, '$lt': end } });
+      return Events.find({ start_time: { '$gte': start, '$lt': end } }, { sort: { 'start_time': 1 } });
     } else {
       return null;
     }
