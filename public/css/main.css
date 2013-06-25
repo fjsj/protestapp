@@ -1,6 +1,13 @@
 body {
     font-family: "PT Sans", "Segoe UI", "Verdana", "Lucida Grande", sans-serif;
-    background: url(/img/hexabump.png) repeat center center scroll;
+    background-color: #262626;
+    background: url(/img/evandro_teixeira.jpg) repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/back.jpg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/back.jpg', sizingMethod='scale')";
     margin: 0;
     padding: 0;
 }
@@ -208,12 +215,10 @@ body {
 }
 
 .today .day-content {
-    border-left: 6px #008763 solid;
     min-height: 4em;
 }
 
 .tomorrow .day-content {
-    border-left: 6px #c59b1e solid;
     min-height: 4em;
 }
 
