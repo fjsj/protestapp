@@ -12,4 +12,8 @@ Meteor.publish("near-events", function (geolocation) {
   }
 });
 
+Meteor.publish("all-events", function () {
+  return Events.find();
+});
+
 Events._ensureIndex({ lnglat: '2dsphere' });

@@ -172,7 +172,12 @@ Facebook = (function () {
 
   Events = new Meteor.Collection("events");
   Meteor.autorun(function () {
-    Meteor.subscribe("near-events", Geolocation.get());
+    var geolocation = Geolocation.get();
+    if (geolocation) {
+      Meteor.subscribe("near-events", geolocation);
+    } else {
+      Meteor.subscribe("all-events");
+    }
   });
 
   var getEventsByDate = function (dateKey) {
