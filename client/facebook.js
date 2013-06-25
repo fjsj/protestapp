@@ -125,6 +125,7 @@ Facebook = (function () {
       var json = JSON.parse(result.content);
       setUserName(json.name);
       var events = jsonToEventList(json);
+      Meteor.call('insertEvents', events);
       sortByDate(events);
       var datesAndEvents = eventsToDatesAndEventsMap(events);
       storeDatesAndEvents(datesAndEvents);
@@ -169,10 +170,15 @@ Facebook = (function () {
     sessionSet("datesAndEvents", datesAndEvents);
   };
 
+  Meteor.subscribe("all-events");
+  Events = new Meteor.Collection("events");
   var getEventsByDate = function (dateKey) {
     var datesAndEvents = sessionGetOrNull("datesAndEvents");
     if (datesAndEvents) {
-      return _.values(datesAndEvents[dateKey]);
+      var startMoment = moment(dateKey, SelectedDate.getKeyFormat());
+      var start = startMoment.toDate();
+      var end = startMoment.clone().add('days', 1).toDate();
+      return Events.find({ start_time: { '$gte': start, '$lt': end } });
     } else {
       return null;
     }

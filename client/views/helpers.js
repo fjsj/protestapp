@@ -12,11 +12,11 @@ Handlebars.registerHelper('ifIsNull', function (value, options) {
 
 /*
  * formatDate template helper.
- * Converts from Facebook date formats to local (current language) time and date format.
+ * Converts from Date to local (current language) time and date format string.
  */
 Handlebars.registerHelper('formatDate', function (value) {
   var localFormat = I18N.getDateFormat();
-  return moment(value, Facebook.getFbDateFormats()).format("HH:mm " + localFormat);
+  return moment(value).format("HH:mm " + localFormat);
 });
 
 /*

@@ -55,6 +55,6 @@ Template.tomorrowEvents.tomorrowContext = function () {
  */
 Template.fbEventList.helpers({
   formatDateAsKey: function (value) {
-    return moment(value, Facebook.getFbDateFormats()).format(SelectedDate.getKeyFormat());
+    return moment(value).format(SelectedDate.getKeyFormat());
   }
 });
