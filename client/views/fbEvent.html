@@ -14,33 +14,33 @@
 
     <div class="row-steps-fluid">
       <div class="step-header-full step3">
-        <h3>{{trans "Step 4: event information"}}</h3>
+        <h3>Passo 4: informações do evento</h3>
       </div>
       <div class="step-fluid place-date-time">
-        <div class="step-header"><h3><i class="icon-tags pull-left"></i> {{trans "Details"}}</h3></div>
+        <div class="step-header"><h3><i class="icon-tags pull-left"></i> Detalhes</h3></div>
         <div class="event-content">
           <div class="event-content-row event-ratio">
             <i class="female"></i> {{#ifIsNull maleRatio}}?{{else}}{{femaleRatio maleRatio}}%{{/ifIsNull}}
             <i class="male"></i> {{#ifIsNull maleRatio}}?{{else}}{{maleRatio}}%{{/ifIsNull}}
           </div>
           <div class="event-content-row facebook-link" title="{{name}}">
-            <i class="icon-facebook-sign icon-2x"></i> <a href="https://www.facebook.com/events/{{id}}" target="_blank"><span class="event-data-text">{{trans "view on Facebook"}}</a></span>
+            <i class="icon-facebook-sign icon-2x"></i> <a href="https://www.facebook.com/events/{{id}}" target="_blank"><span class="event-data-text">ver no Facebook</a></span>
           </div>
           {{#if description}}
           <div class="event-content-row event-full-description">
-            <i class="icon-file-alt icon-2x"></i> {{trans "Description"}}:
+            <i class="icon-file-alt icon-2x"></i> Descrição:
             <p>{{nl2br description}}</p>
           </div>
           {{/if}}
         </div>
       </div><div class="step-fluid event-attendees">
-        <div class="step-header"><h3><i class="icon-group pull-left"></i> {{trans "Attending"}}</h3></div>
+        <div class="step-header"><h3><i class="icon-group pull-left"></i> Quem vai</h3></div>
         <div class="event-content">
           {{#ifIsNull attendees}}
             <div class="row-fluid">
               <div class="attendees-info-message">
                 <div class="event-content-row">
-                  <i class="icon-spinner icon-spin icon-2x"></i> {{trans "Loading..."}}
+                  <i class="icon-spinner icon-spin icon-2x"></i> Carregando...
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
               <div class="row-fluid">
                 <div class="attendees-info-message">
                   <div class="event-content-row">
-                    <i class="icon-check-empty icon-2x"></i> {{trans "No attendees found"}}
+                    <i class="icon-check-empty icon-2x"></i> Ninguém confirmou presença
                   </div>
                 </div>
               </div>

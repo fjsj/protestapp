@@ -20,14 +20,6 @@ Handlebars.registerHelper('formatDate', function (value) {
 });
 
 /*
- * Translation template helper.
- * Translate the given message to the current language (if necessary).
- */
-Handlebars.registerHelper('trans', function (value) {
-  return I18N.translate(value);
-});
-
-/*
  * Convert new line (\n\r) to <br>.
  * See: https://github.com/danharper/Handlebars-Helpers/blob/master/helpers.js
  */

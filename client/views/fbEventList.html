@@ -17,7 +17,7 @@
       {{#ifIsNull fbEvents}}
         <div class="row-fluid">
           <div class="events-info-message">
-            <i class="icon-spinner icon-spin icon-2x pull-left"></i> {{trans "Loading events..."}}
+            <i class="icon-spinner icon-spin icon-2x pull-left"></i> Carregando eventos...
           </div>
         </div>
       {{else}}
@@ -44,14 +44,14 @@
           </div>
         {{else}}
           <div class="events-info-message">
-            <i class="icon-check-empty icon-2x pull-left"></i> {{trans "No events found at this date :("}}
+            <i class="icon-check-empty icon-2x pull-left"></i> Nenhum evento encontrado nesta data
           </div>
         {{/each}}
       {{/ifIsNull}}
     {{else}}
       <div class="row-fluid">
         <div class="events-info-message">
-          <i class="icon-facebook-sign icon-2x pull-left"></i> {{trans "Sign in with your Facebook to see events"}}
+          <i class="icon-facebook-sign icon-2x pull-left"></i> Entre com o seu Facebook para ver os eventos
         </div>
       </div>
     {{/if}}
