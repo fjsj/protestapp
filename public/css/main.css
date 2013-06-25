@@ -17,7 +17,7 @@ body {
 }
 
 .navbar-inverse .navbar-inner {
-    background: #2d1892;
+    background: #002776;
 }
 
 .navbar .navbar-inner {
@@ -60,11 +60,13 @@ body {
 }
 
 .navbar .brand {
-    font-family: "Nova Flat", sans-serif;
+    font-family: "Convergence", "PT Sans", "Segoe UI", sans-serif;
+    letter-spacing: -1px;
+    font-weight: bold;
     color: white;
-    font-size: 36px;
+    font-size: 46px;
     line-height: 32px;
-    padding: 12px 20px 13px 22px;
+    padding: 18px 20px 18px 22px;
     text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
 }
 
@@ -110,7 +112,8 @@ body {
 }
 
 .hero-unit h1 {
-    font-family: "Convergence", "PT Sans", "Segoe UI", sans-serif;
+    font-family: "Short Stack", "Convergence", "PT Sans", "Segoe UI", sans-serif;
+    letter-spacing: -2px;
     font-size: 48px;
     margin-top: 6px;
     text-shadow: 3px 3px #000c3c;
@@ -159,17 +162,19 @@ body {
 }
 
 .step-header-full {
-    border-left: 6px #b51e62 solid;
-    border-bottom: 6px #a50e55 solid;
-    background-color: #e80971;
+    border-left: 6px #118dbb solid;
+    border-bottom: 6px #0083b4 solid;
+    background-color: #0faadd;
     color: white;
+    text-shadow: 2px 2px #0083b4;
 }
 
 .step1 .step-header {
-    border-left: 6px #b51324 solid;
-    border-bottom: 6px #a00012 solid;
-    background-color: #e20d2a;
+    border-left: 6px #c59b1e solid;
+    border-bottom: 6px #bb880b solid;
+    background-color: #ddb108;
     color: white;
+    text-shadow: 2px 2px #bb880b;
 }
 
 .step2 .step-header {
@@ -177,11 +182,12 @@ body {
     border-bottom: 6px #007054 solid;
     background-color: #009973;
     color: white;
+    text-shadow: 2px 2px #007054;
 }
 
 .today .step-header {
-    border-left: 6px #b73700 solid;
-    background-color: #ff5400;
+    border-left: 6px #a00012 solid;
+    background-color: #b51324;
     color: white;
 }
 
@@ -200,7 +206,7 @@ body {
 }
 
 .today .day-content {
-    border-left: 6px #b73700 solid;
+    border-left: 6px #a00012 solid;
     min-height: 4em;
 }
 
