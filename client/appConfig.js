@@ -18,7 +18,7 @@ AppConfig = (function () {
   if (isLocalhost) {
     appId = "520006781364253";
   } else {
-    appId = "467335689989212";
+    appId = "570822936290537";
   }
   
   return {
