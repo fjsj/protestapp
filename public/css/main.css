@@ -43,7 +43,7 @@ body {
 }
 
 .navbar .nav > li {
-    line-height: 40px;
+    line-height: 52px;
 }
 
 .navbar-inverse .nav > li > a {
@@ -186,15 +186,17 @@ body {
 }
 
 .today .step-header {
-    border-left: 6px #a00012 solid;
-    background-color: #b51324;
+    border-left: 6px #008763 solid;
+    background-color: #009973;
     color: white;
+    text-shadow: 2px 2px #007054;
 }
 
 .tomorrow .step-header {
-    border-left: 6px #211f30 solid;
-    background-color: #373159;
+    border-left: 6px #c59b1e solid;
+    background-color: #ddb108;
     color: white;
+    text-shadow: 2px 2px #bb880b;
 }
 
 .step-header i {
@@ -206,12 +208,12 @@ body {
 }
 
 .today .day-content {
-    border-left: 6px #a00012 solid;
+    border-left: 6px #008763 solid;
     min-height: 4em;
 }
 
 .tomorrow .day-content {
-    border-left: 6px #211f30 solid;
+    border-left: 6px #c59b1e solid;
     min-height: 4em;
 }
 

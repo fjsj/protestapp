@@ -29,25 +29,27 @@
 }
 
 .event-detailed-info .place-date-time .step-header {
-    border-left: 6px #b73700 solid;
-    background-color: #ff5400;
+    border-left: 6px #008763 solid;
+    background-color: #009973;
     color: white;
+    text-shadow: 2px 2px #007054;
 }
 
 .event-detailed-info .place-date-time .event-content {
-    border-left: 6px #b73700 solid;
+    border-left: 6px #008763 solid;
     padding: 1em;
     font-size: 18px;
 }
 
 .event-detailed-info .event-attendees .step-header {
-    border-left: 6px #211f30 solid;
-    background-color: #373159;
+    border-left: 6px #c59b1e solid;
+    background-color: #ddb108;
     color: white;
+    text-shadow: 2px 2px #bb880b;
 }
 
 .event-detailed-info .event-attendees .event-content {
-    border-left: 6px #211f30 solid;
+    border-left: 6px #c59b1e solid;
     font-size: 18px;
     padding-bottom: 2em;
 }
