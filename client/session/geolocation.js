@@ -1,7 +1,16 @@
 Geolocation = (function () {
+  var getShowAll = function () {
+    return Session.get("showAll");
+  };
+
+  var setShowAll = function (showAll) {
+    Session.set("showAll", showAll);
+  };
+
   var find = function () {
     if (geoPosition.init()) {
       var successCallback = function (p) {
+        Geolocation.setShowAll(false);
         Geolocation.set(p);
       };
 
@@ -28,6 +37,8 @@ Geolocation = (function () {
   };
 
   return {
+    getShowAll: getShowAll,
+    setShowAll: setShowAll,
     find: find,
     get: get,
     set: set,

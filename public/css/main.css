@@ -158,6 +158,12 @@ body {
     overflow: hidden;
 }
 
+#show-near, #show-all {
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+}
+
 .step-fluid .step-header, .step-header-full {
     background-color: white;
     padding-left: 12px;

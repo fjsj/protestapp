@@ -173,7 +173,8 @@ Facebook = (function () {
   Events = new Meteor.Collection("events");
   Meteor.autorun(function () {
     var geolocation = Geolocation.get();
-    if (geolocation) {
+    var showAll = Geolocation.getShowAll();
+    if (geolocation && !showAll) {
       Meteor.subscribe("near-events", geolocation);
     } else {
       Meteor.subscribe("all-events");
