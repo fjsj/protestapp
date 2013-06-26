@@ -152,9 +152,14 @@ Facebook = (function () {
     var geolocation = Geolocation.get();
     var showAll = Geolocation.getShowAll();
     if (geolocation && !showAll) {
-      Meteor.subscribe("near-events", geolocation);
+      Session.set('loadingEventsCollection', true);
+      Meteor.subscribe("near-events", geolocation, function () {
+        Session.set('loadingEventsCollection', false);
+      });
     } else {
-      Meteor.subscribe("all-events");
+      Meteor.subscribe("all-events", function () {
+        Session.set('loadingEventsCollection', false);
+      });
     }
   });
 
@@ -254,4 +259,8 @@ Facebook = (function () {
 
 Handlebars.registerHelper("isLogged", function () {
   return Facebook.getAccessToken() !== null;
+});
+
+Handlebars.registerHelper("loadingEventsCollection", function () {
+  return Session.get('loadingEventsCollection');
 });
