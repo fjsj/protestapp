@@ -179,6 +179,11 @@ Facebook = (function () {
         fetchAndStoreEventDescription(id);
         return fbEvent;
       } else {
+        // if event couldn't be found, maybe it is not near...
+        if (!Geolocation.getShowAll()) {
+          // so subscribe to all events.
+          Geolocation.setShowAll(true);
+        }
         return null;
       }
     } catch (e) {
