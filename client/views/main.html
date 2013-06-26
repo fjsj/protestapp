@@ -9,6 +9,8 @@
       {{#with selectedEvent}}
         {{> fbEvent}}
       {{/with}}
+
+      {{> googleAnalytics}}
     {{else}}
       <div class="hero-background">
         <div class="hero-unit container-shadow">
@@ -49,6 +51,8 @@
         <div class="step-header-full map-header"><h3><i class="icon-globe pull-left"></i> Mapa</h3></div>
         {{> eventsMap}}
       </div>
+
+      {{> googleAnalytics}}
     {{/if}}
 
     <footer>
