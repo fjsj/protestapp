@@ -171,7 +171,7 @@ Facebook = (function () {
     return Events.find({ start_time: { '$gte': start, '$lt': end } }, { sort: { 'start_time': 1 } });
   };
 
-  var getEvent = function (dateKey, id) {
+  var getEvent = function (id) {
     try {
       var fbEvent = Events.findOne({ 'id': id });
       if (fbEvent) {

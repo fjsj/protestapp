@@ -45,14 +45,3 @@ Template.tomorrowEvents.tomorrowContext = function () {
     return null;
   }
 };
-
-/*
- * formatDateAsKey template helper.
- * Converts from Facebook date formats to SelectedDate.keyFormat,
- * which is compatible with Facebook.getEventsByDate function.
- */
-Template.fbEventList.helpers({
-  formatDateAsKey: function (value) {
-    return moment(value).format(SelectedDate.getKeyFormat());
-  }
-});
