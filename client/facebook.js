@@ -151,8 +151,9 @@ Facebook = (function () {
   Meteor.autorun(function () {
     var geolocation = Geolocation.get();
     var showAll = Geolocation.getShowAll();
+
+    Session.set('loadingEventsCollection', true);
     if (geolocation && !showAll) {
-      Session.set('loadingEventsCollection', true);
       Meteor.subscribe("near-events", geolocation, function () {
         Session.set('loadingEventsCollection', false);
       });
