@@ -5,6 +5,7 @@ Template.eventsMap.rendered = function() {
   };
 
   var map = new google.maps.Map(document.getElementById("events-map-canvas"), mapOptions);
+  var infowindow = new google.maps.InfoWindow({ content: '...' });
   var geolocation = Geolocation.get();
 
   if (geolocation && geolocation.coords && geolocation.coords.latitude && geolocation.coords.longitude) {
@@ -18,6 +19,11 @@ Template.eventsMap.rendered = function() {
       icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
     });
     marker.setMap(map);
+
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.content = 'Você está aqui!';
+      infowindow.open(map, marker);
+    });
   }
 
   Session.set('eventsMapRendered', true);
@@ -40,9 +46,7 @@ Template.eventsMap.rendered = function() {
             marker.setMap(map);
 
             google.maps.event.addListener(marker, 'click', function() {
-              var infowindow = new google.maps.InfoWindow({
-                content: Template.eventInfoWindow(ev)
-              });
+              infowindow.content = Template.eventInfoWindow(ev);
               infowindow.open(map, marker);
             });
           }
