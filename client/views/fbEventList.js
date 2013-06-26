@@ -18,7 +18,6 @@ Template.todayEvents.todayContext = function () {
   if (todayKey) {
     return {
       'currentDate': SelectedDate.getFormatted(),
-      'isLogged': Facebook.getAccessToken() !== null,
       'fbEvents': Facebook.getEventsByDate(todayKey)
     };
   } else {
@@ -40,7 +39,6 @@ Template.tomorrowEvents.tomorrowContext = function () {
     var tomorrowKey = SelectedDate.getTomorrowAsKey();
     return {
       'currentDate': SelectedDate.getTomorrowFormatted(),
-      'isLogged': Facebook.getAccessToken() !== null,
       'fbEvents': Facebook.getEventsByDate(tomorrowKey)
     };
   } else {

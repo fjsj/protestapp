@@ -251,3 +251,7 @@ Facebook = (function () {
     logout: logout
   };
 }());
+
+Handlebars.registerHelper("isLogged", function () {
+  return Facebook.getAccessToken() !== null;
+});

@@ -45,10 +45,6 @@ Template.fbLogin.created = function () {
  * since Facebook namespace uses Meteor Session internaly,
  * which is a reactive data source.
  */
-Template.fbLogin.isLogged = function () {
-  return Facebook.getAccessToken() !== null;
-};
-
 Template.fbLogin.userName = function () {
   return Facebook.getUserName() || '';
 };
