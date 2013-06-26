@@ -1,5 +1,5 @@
 body {
-    font-family: "PT Sans", "Segoe UI", "Verdana", "Lucida Grande", sans-serif;
+    font-family: "PT Sans", "Open Sans", "Segoe UI", "Verdana", "Lucida Grande", sans-serif;
     background-color: #262626;
     background: url(/img/evandro_teixeira.jpg) repeat center center fixed;
     -webkit-background-size: cover;
@@ -44,7 +44,6 @@ body {
 }
 
 .navbar .nav {
-    font-family: "Exo", "PT Sans", "Segoe UI", sans-serif;
     float: right;
     margin-right: 0;
 }
@@ -67,14 +66,14 @@ body {
 }
 
 .navbar .brand {
-    font-family: "Convergence", "PT Sans", "Segoe UI", sans-serif;
+    font-family: "Special Elite", "PT Sans", "Open Sans", "Segoe UI", "Verdana", "Lucida Grande", sans-serif;
     letter-spacing: -1px;
     font-weight: bold;
     color: white;
     font-size: 46px;
     line-height: 32px;
-    padding: 18px 20px 18px 22px;
-    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
+    padding: 18px 20px 14px 22px;
+    margin-top: 8px;
 }
 
 .navbar-form {
@@ -119,9 +118,7 @@ body {
 }
 
 .hero-unit h1 {
-    font-family: "Short Stack", "Convergence", "PT Sans", "Segoe UI", sans-serif;
-    letter-spacing: -3px;
-    font-size: 48px;
+    font-size: 52px;
     margin-top: 6px;
     text-shadow: 3px 3px #000c3c;
     color: white;
@@ -269,7 +266,6 @@ time span {
 }
 
 .step-fluid .day-content .event-info .event-description {
-    font-family: "Exo", "Open Sans", "Segoe UI", sans-serif;
     margin-left: 80px;
     line-height: 16px;
 }
@@ -431,7 +427,6 @@ footer a:hover {
         padding-bottom: 20px;
     }
     .hero-unit h1 {
-        font-family: "Convergence", "PT Sans", "Segoe UI", sans-serif;
         font-size: 20px;
         text-shadow: 2px 2px #000c3c;
     }
