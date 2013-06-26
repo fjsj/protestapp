@@ -38,6 +38,13 @@ Template.eventsMap.rendered = function() {
               eventId: ev.id
             });
             marker.setMap(map);
+
+            google.maps.event.addListener(marker, 'click', function() {
+              var infowindow = new google.maps.InfoWindow({
+                content: Template.eventInfoWindow(ev)
+              });
+              infowindow.open(map, marker);
+            });
           }
         });
       }
