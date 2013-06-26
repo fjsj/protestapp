@@ -126,9 +126,6 @@ Facebook = (function () {
       setUserName(json.name);
       var events = jsonToEventList(json);
       Meteor.call('insertEvents', events);
-      sortByDate(events);
-      var datesAndEvents = eventsToDatesAndEventsMap(events);
-      storeDatesAndEvents(datesAndEvents);
     }
   };
 
@@ -150,26 +147,6 @@ Facebook = (function () {
     return events;
   };
 
-  var sortByDate = function (events) {
-    events.sort(function (a, b) {
-      return moment(a.start_time, fbDateFormats).valueOf() - moment(b.start_time, fbDateFormats).valueOf();
-    });
-  };
-
-  var eventsToDatesAndEventsMap = function (events) {
-    var datesAndEvents = {};
-    events.forEach(function (event) {
-      var dateKey = moment(event.start_time, fbDateFormats).format(SelectedDate.getKeyFormat());
-      datesAndEvents[dateKey] = datesAndEvents[dateKey] || {};
-      datesAndEvents[dateKey][event.id] = event;
-    });
-    return datesAndEvents;
-  };
-
-  var storeDatesAndEvents = function (datesAndEvents) {
-    sessionSet("datesAndEvents", datesAndEvents);
-  };
-
   Events = new Meteor.Collection("events");
   Meteor.autorun(function () {
     var geolocation = Geolocation.get();
@@ -182,20 +159,15 @@ Facebook = (function () {
   });
 
   var getEventsByDate = function (dateKey) {
-    var datesAndEvents = sessionGetOrNull("datesAndEvents");
-    if (datesAndEvents) {
-      var startMoment = moment(dateKey, SelectedDate.getKeyFormat());
-      var start = startMoment.toDate();
-      var end = startMoment.clone().add('days', 1).toDate();
-      return Events.find({ start_time: { '$gte': start, '$lt': end } }, { sort: { 'start_time': 1 } });
-    } else {
-      return null;
-    }
+    var startMoment = moment(dateKey, SelectedDate.getKeyFormat());
+    var start = startMoment.toDate();
+    var end = startMoment.clone().add('days', 1).toDate();
+    return Events.find({ start_time: { '$gte': start, '$lt': end } }, { sort: { 'start_time': 1 } });
   };
 
   var getEvent = function (dateKey, id) {
     try {
-      var fbEvent = sessionGetOrNull("datesAndEvents")[dateKey][id];
+      var fbEvent = Events.findOne({ 'id': id });
       if (fbEvent) {
         fetchAndStoreEventAttendees(id);
         fetchAndStoreEventDescription(id);
