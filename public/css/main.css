@@ -334,6 +334,10 @@ time span {
     margin-bottom: 0;
 }
 
+#events-map img { /* Google Maps + Bootstrap conflict bugfix: http://stackoverflow.com/questions/13962398/google-maps-api-v3-tools-visual-distortions */
+    max-width: inherit;
+}
+
 #events-map-canvas {
     width: 100%;
     min-height: 300px;
