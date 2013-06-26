@@ -24,6 +24,9 @@ Template.eventsMap.rendered = function() {
       infowindow.content = 'Você está aqui!';
       infowindow.open(map, marker);
     });
+  } else {
+    map.setCenter(new google.maps.LatLng('-15.779039', '-47.928071'));  // Brasília LatLng
+    map.setZoom(3);
   }
 
   Session.set('eventsMapRendered', true);
