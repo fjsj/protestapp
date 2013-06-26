@@ -213,7 +213,7 @@ body {
     text-shadow: 2px 2px #bb880b;
 }
 
-.step-header i {
+.step-header i, .step-header-full i {
     margin-top: 7px;
 }
 
@@ -321,25 +321,20 @@ time span {
     width: 35px;
 }
 
-.mapheader {
-    border-left: 6px #a00012 solid;
+.map-header {
+    border-left: 6px #b51324 solid;
+    border-bottom: 6px #a00012 solid;
     background-color: #e20d2a;
     color: white;
+    text-shadow: 2px 2px #a00012;
 }
 
-.mapheader h3 {
+.map-header h3 {
     margin-top: 0;
     margin-bottom: 0;
-    padding-left: 8px;
 }
 
-.mapheader h3 img {
-    vertical-align: text-top;
-    margin-top: 2px;
-    margin-right: 4px;
-}
-
-.gmap {
+#events-map-canvas {
     width: 100%;
     min-height: 300px;
 }
