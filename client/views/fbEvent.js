@@ -1,4 +1,11 @@
 /*
+ * Loads the Facebook JavaScript SDK when fbEvent template is created.
+ */
+Template.fbEvent.created = function () {
+  ViewHelper.initializeFacebookSDK();
+};
+
+/*
  * Fix CSS columns issue by forcing both .event-content to same height.
  */
 Template.fbEvent.rendered = function () {
@@ -62,6 +69,16 @@ Template.fbEvent.maleRatio = function () {
   }
   return null;
 };
+
+/*
+ * Event click events.
+ * Clicking in .btn-login opens the Facebook JavaScript SDK login pop-up.
+ */
+Template.fbEvent.events({
+  "click .btn-login": function () {
+    ViewHelper.showLoginPopup();
+  }
+});
 
 /*
  * Female ratio template helper.

@@ -176,9 +176,11 @@ Facebook = (function () {
     try {
       var fbEvent = Events.findOne({ 'id': id });
       if (fbEvent) {
-        fetchAndStoreEventAttendees(id);
-        fetchAndStoreEventDescription(id);
-        fetchAndStoreEventAttendeeCount(id);
+        if (getAccessToken()) {
+          fetchAndStoreEventAttendees(id);
+          fetchAndStoreEventDescription(id);
+          fetchAndStoreEventAttendeeCount(id);
+        }
         return fbEvent;
       } else {
         // if event couldn't be found, maybe it is not near...

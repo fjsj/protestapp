@@ -19,18 +19,25 @@
       <div class="step-fluid place-date-time">
         <div class="step-header"><h3><i class="icon-tags pull-left"></i> Detalhes</h3></div>
         <div class="event-content">
-          <div class="event-content-row event-ratio">
-            <i class="female"></i> {{#ifIsNull maleRatio}}?{{else}}{{femaleRatio maleRatio}}%{{/ifIsNull}}
-            <i class="male"></i> {{#ifIsNull maleRatio}}?{{else}}{{maleRatio}}%{{/ifIsNull}}
-          </div>
-          <div class="event-content-row facebook-link" title="{{name}}">
-            <i class="icon-facebook-sign icon-2x"></i> <a href="https://www.facebook.com/events/{{id}}" target="_blank"><span class="event-data-text">ver no Facebook</a></span>
-          </div>
-          {{#if description}}
-          <div class="event-content-row event-full-description">
-            <i class="icon-file-alt icon-2x"></i> Descrição:
-            <p>{{nl2br description}}</p>
-          </div>
+          {{#if isLogged}}
+            <div class="event-content-row event-ratio">
+              <i class="female"></i> {{#ifIsNull maleRatio}}?{{else}}{{femaleRatio maleRatio}}%{{/ifIsNull}}
+              <i class="male"></i> {{#ifIsNull maleRatio}}?{{else}}{{maleRatio}}%{{/ifIsNull}}
+            </div>
+
+            <div class="event-content-row facebook-link" title="{{name}}">
+              <i class="icon-facebook-sign icon-2x"></i> <a href="https://www.facebook.com/events/{{id}}" target="_blank"><span class="event-data-text">ver no Facebook</span></a>
+            </div>
+            {{#if description}}
+              <div class="event-content-row event-full-description">
+                <i class="icon-file-alt icon-2x"></i> Descrição:
+                <p>{{nl2br description}}</p>
+              </div>
+            {{/if}}
+          {{else}}
+            <div class="event-content-row">
+              <button class="btn btn-small btn-primary btn-login" type="button"><i class="icon-facebook-sign"></i> Entre com o seu Facebook</button> para ver mais informações
+            </div>
           {{/if}}
         </div>
       </div><div class="step-fluid event-attendees">
@@ -40,7 +47,11 @@
             <div class="row-fluid">
               <div class="attendees-info-message">
                 <div class="event-content-row">
-                  <i class="icon-spinner icon-spin icon-2x"></i> Carregando...
+                  {{#if isLogged}}
+                    <i class="icon-spinner icon-spin icon-2x"></i> Carregando...
+                  {{else}}
+                    <button id="login-text" class="btn btn-small btn-primary btn-login" type="button"><i class="icon-facebook-sign"></i> Entre com o seu Facebook</button> para ver quem vai
+                  {{/if}}
                 </div>
               </div>
             </div>
