@@ -16,16 +16,9 @@ Template.todayEvents.rendered = function() {
 Template.todayEvents.todayContext = function () {
   var todayKey = SelectedDate.getAsKey();
   if (todayKey) {
-    var fbEvents = Facebook.getEventsByDate(todayKey);
-    fbEvents.observe({
-      removed: function () {
-        $helpers.forceAllToSameHeight(".day-content");
-      }
-    });
-
     return {
       'currentDate': SelectedDate.getFormatted(),
-      'fbEvents': fbEvents
+      'fbEvents': Facebook.getEventsByDate(todayKey)
     };
   } else {
     return null;
@@ -44,16 +37,9 @@ Template.tomorrowEvents.tomorrowContext = function () {
   var todayKey = SelectedDate.getAsKey();
   if (todayKey) {
     var tomorrowKey = SelectedDate.getTomorrowAsKey();
-    var fbEvents = Facebook.getEventsByDate(tomorrowKey);
-    fbEvents.observe({
-      removed: function () {
-        $helpers.forceAllToSameHeight(".day-content");
-      }
-    });
-
     return {
       'currentDate': SelectedDate.getTomorrowFormatted(),
-      'fbEvents': fbEvents
+      'fbEvents': Facebook.getEventsByDate(tomorrowKey)
     };
   } else {
     return null;
