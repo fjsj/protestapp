@@ -20,7 +20,6 @@ Template.eventsMap.rendered = function() {
       icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
     });
     marker.setMap(map);
-    markersArray.push(marker);
 
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.content = 'Você está aqui!';
