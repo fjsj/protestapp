@@ -42,6 +42,18 @@ Template.eventsMap.rendered = function() {
     }
   };
 
+  var fitToAllMarkers = function () {
+    if (markersArray) {
+      var bounds = new google.maps.LatLngBounds();
+
+      for (var i in markersArray) {
+        bounds.extend(markersArray[i].getPosition());
+      }
+      map.setCenter(bounds.getCenter());
+      map.fitBounds(bounds);
+    }
+  };
+
   Deps.autorun(function () {
     var isRendered = Session.get('eventsMapRendered');
     var isLogged = Facebook.getAccessToken();
@@ -70,6 +82,7 @@ Template.eventsMap.rendered = function() {
             });
           }
         });
+        fitToAllMarkers();
       }
     }
   });
