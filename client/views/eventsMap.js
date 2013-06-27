@@ -65,12 +65,13 @@ Template.eventsMap.rendered = function() {
         var tomorrowEvents = Facebook.getEventsByDate(tomorrowKey).fetch();
 
         clearMarkers();
-        _(todayEvents.concat(tomorrowEvents)).each(function (ev) {
+        var addMarker = function (ev, isToday) {
           if (ev.venue && ev.venue.latitude && ev.venue.longitude) {
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(ev.venue.latitude, ev.venue.longitude),
               title: ev.name,
-              eventId: ev.id
+              eventId: ev.id,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/' + (isToday ? 'green' : 'yellow') + '-dot.png'
             });
             marker.setMap(map);
             markersArray.push(marker);
@@ -80,6 +81,12 @@ Template.eventsMap.rendered = function() {
               infowindow.open(map, marker);
             });
           }
+        };
+        _(todayEvents).each(function (ev) {
+          addMarker(ev, true);
+        });
+        _(tomorrowEvents).each(function (ev) {
+          addMarker(ev, false);
         });
         fitToAllMarkers();
       }
