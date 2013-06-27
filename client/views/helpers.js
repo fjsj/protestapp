@@ -74,6 +74,7 @@ $helpers = (function () {
 
   var forceAllToSameHeight = function (selector) {
     if ($(".step-fluid").css("display") === "inline-block") {
+      $(selector).css("min-height", '');
       var heights = [];
       $(selector).each(function () {
         heights.push($(this).height());
