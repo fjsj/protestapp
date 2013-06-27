@@ -12,7 +12,8 @@
  * * The given date format follows the keyFormat defined in SelectedDate (see selectedDate.js).
  * getEvent returns the event object with the provided id (and starts to fetch its attendees in background).
  * getEventAttendees returns the attendees array of the event with the provided id, if those attendees were already fetched.
- *
+ * getEventDescription and getEventAttendeeCount returns event description and attendeeCount if they were already fetched.
+ * 
  * Events objects are fetched automatically every time access token changes,
  * since the internal fetchAndStoreEvents function is in a autorun context.
  */
@@ -177,6 +178,7 @@ Facebook = (function () {
       if (fbEvent) {
         fetchAndStoreEventAttendees(id);
         fetchAndStoreEventDescription(id);
+        fetchAndStoreEventAttendeeCount(id);
         return fbEvent;
       } else {
         // if event couldn't be found, maybe it is not near...
@@ -243,10 +245,39 @@ Facebook = (function () {
     return sessionGetOrNull("description" + id);
   };
   // End of functions related to event description
+  
+  // Start of functions related to event attendee count
+  var fetchAndStoreEventAttendeeCount = function (id) {
+    var accessToken = getAccessToken();
+    var url = "https://graph.facebook.com/fql?q=SELECT%20eid%2C%20attending_count%20FROM%20event%20WHERE%20eid%20%3D%20" + id + "&format=json";
+    url += "&access_token=" + accessToken;
+    Meteor.http.get(url, {timeout: 30000}, processAttendeeCount);
+  };
+
+  var processAttendeeCount = function (error, result) {
+    if (result.statusCode === 200) {
+      var json = JSON.parse(result.content);
+      
+      if (json.data && json.data[0] && json.data[0].eid && json.data[0].attending_count) {
+        var eid = json.data[0].eid;
+        var attendeeCount = json.data[0].attending_count;
+        storeEventAttendeeCount(eid, attendeeCount);
+      }
+    }
+  };
+
+  var storeEventAttendeeCount = function (id, attendeeCount) {
+    sessionSet("attendeeCount" + id, attendeeCount);
+  };
+
+  var getEventAttendeeCount = function (id) {
+    return sessionGetOrNull("attendeeCount" + id);
+  };
+  // End of functions related to event attendee count
 
   /*
    * Rerun fetchAndStoreEvents when its dependencies are updated! Meteor deps magic!
-   * See: http://docs.meteor.com/#meteor_autorun
+   * See: http://docs.meteor.com/#deps_autorun
    */
   Meteor.autorun(fetchAndStoreEvents);
 
@@ -259,6 +290,7 @@ Facebook = (function () {
     getEvent: getEvent,
     getEventAttendees: getEventAttendees,
     getEventDescription: getEventDescription,
+    getEventAttendeeCount: getEventAttendeeCount,
     logout: logout
   };
 }());
