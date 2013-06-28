@@ -112,7 +112,7 @@ Facebook = (function () {
   var fetchAndStoreEvents = function () {
     var accessToken = getAccessToken();
     if (accessToken !== null) {
-      var timestamp = moment().startOf("day").unix();
+      var timestamp = moment().startOf("day").subtract("months", 1).unix();
       // Using Facebook Graph API Field Expansion, that's why this is a huge URL.
       // See: https://developers.facebook.com/docs/reference/api/field_expansion/
       var url = "https://graph.facebook.com/me?fields=name,friends.fields(events.since(" + timestamp + ").limit(25).fields(id,start_time,end_time,location,name,venue,picture.width(100).height(100).type(square)))";
