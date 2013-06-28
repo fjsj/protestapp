@@ -68,84 +68,45 @@ Facebook = (function () {
   // End of public general functions
 
   // Start of functions related to event objects
-  var shouldCache = !AppConfig.isMobile && !ClientStore.isPolyfill();
-
-  // Cross-tab/window HTTP cache. Uses ClientStore.
-  var cachedFacebookHttpGet = function (url, callback) {
-    var cachedValue = null;
-    if (shouldCache) {
-      try {
-        cachedValue = ClientStore.get(url);
-      } catch (e) {
-      }
-    }
-
-    if (cachedValue !== null && !cachedValue[1].error) {
-      callback(cachedValue[0], cachedValue[1]);
-    } else {
-      var cacheAndCallback = function (error, result) {
-        // Check if accessToken was valid at request time
-        if (result.statusCode == 400) {
-          var json = JSON.parse(result.content);
-          // Invalid request! Expired accessToken.
-          // Page refresh is necessary, to reload Facebook JavaScript SDK.
-          if (json.error.type == "OAuthException") {
-            window.location.reload();
-          }
-        } else {
-          if (shouldCache) {
-            try {
-              var value = [error, result];
-              ClientStore.set(url, value);
-            } catch (e) {
-            }
-          }
-
-          callback(error, result);
+  var facebookHttpGet = function (url, callback) {
+    var verifyAndCallback = function (error, result) {
+      // Check if accessToken was valid at request time
+      if (result.statusCode == 400) {
+        var json = JSON.parse(result.content);
+        // Invalid request! Expired accessToken.
+        // Page refresh is necessary, to reload Facebook JavaScript SDK.
+        if (json.error.type == "OAuthException") {
+          window.location.reload();
         }
-      };
-      
-      Meteor.http.get(url, {timeout: 30000}, cacheAndCallback);
-    }
+      } else {
+        callback(error, result);
+      }
+    };
+    
+    Meteor.http.get(url, {timeout: 30000}, verifyAndCallback);
   };
 
   var fetchAndStoreEvents = function () {
     var accessToken = getAccessToken();
     if (accessToken !== null) {
-      var timestamp = moment().startOf("day").subtract("months", 1).unix();
-      // Using Facebook Graph API Field Expansion, that's why this is a huge URL.
-      // See: https://developers.facebook.com/docs/reference/api/field_expansion/
-      var url = "https://graph.facebook.com/me?fields=name,friends.fields(events.since(" + timestamp + ").limit(25).fields(id,start_time,end_time,location,name,venue,picture.width(100).height(100).type(square)))";
+      var url = "https://graph.facebook.com/me?fields=name";
       url += "&access_token=" + accessToken;
-      cachedFacebookHttpGet(url, processEvents);
-    }
-  };
+      facebookHttpGet(url, function (error, result) {
+        if (result.statusCode === 200) {
+          var json = JSON.parse(result.content);
+          setUserName(json.name);
+          var geolocation = Geolocation.get();
+          var showAll = Geolocation.getShowAll();
 
-  var processEvents = function (error, result) {
-    if (result.statusCode === 200) {
-      var json = JSON.parse(result.content);
-      setUserName(json.name);
-      var events = jsonToEventList(json);
-      Meteor.call('insertEvents', events);
-    }
-  };
-
-  var jsonToEventList = function (json) {
-    var eventsIds = {}; // id hashset to avoid event repetition
-    var events = [];
-    if (json.friends) {
-      json.friends.data.forEach(function (friend) {
-        if (friend.events) {
-          friend.events.data.forEach(function (event) {
-            if (!(eventsIds.hasOwnProperty(event.id))) { // only push events that weren't already pushed
-              events.push(event);
-              eventsIds[event.id] = true;
-            }
+          if (geolocation && !showAll) {
+            Session.set('loadingEventsCollection', true);
+          }
+          Meteor.call('insertEvents', accessToken, function () {
+            Session.set('loadingEventsCollection', false);
           });
         }
       });
     }
-    return events;
   };
 
   Events = new Meteor.Collection("events");
@@ -203,7 +164,7 @@ Facebook = (function () {
     // See: https://developers.facebook.com/docs/reference/api/field_expansion/
     var url = "https://graph.facebook.com/" + id + "?fields=attending.limit(1000).fields(name,gender,picture.width(50).height(50))";
     url += "&access_token=" + accessToken;
-    Meteor.http.get(url, {timeout: 30000}, processAttendees);
+    facebookHttpGet(url, processAttendees);
   };
 
   var processAttendees = function (error, result) {
@@ -228,7 +189,7 @@ Facebook = (function () {
     var accessToken = getAccessToken();
     var url = "https://graph.facebook.com/" + id + "?fields=description";
     url += "&access_token=" + accessToken;
-    Meteor.http.get(url, {timeout: 30000}, processDescription);
+    facebookHttpGet(url, processDescription);
   };
 
   var processDescription = function (error, result) {
@@ -253,7 +214,7 @@ Facebook = (function () {
     var accessToken = getAccessToken();
     var url = "https://graph.facebook.com/fql?q=SELECT%20eid%2C%20attending_count%20FROM%20event%20WHERE%20eid%20%3D%20" + id + "&format=json";
     url += "&access_token=" + accessToken;
-    Meteor.http.get(url, {timeout: 30000}, processAttendeeCount);
+    facebookHttpGet(url, processAttendeeCount);
   };
 
   var processAttendeeCount = function (error, result) {
