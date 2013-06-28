@@ -50,7 +50,7 @@ Template.eventsMap.rendered = function() {
       for (var i in markersArray) {
         bounds.extend(markersArray[i].getPosition());
       }
-      if (bounds.length) {
+      if (!bounds.isEmpty()) {
         if (myPosition) {
           bounds.extend(myPosition);
         }
