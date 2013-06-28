@@ -33,7 +33,7 @@ Meteor.methods({
     var timestamp = moment().startOf("day").subtract("months", 1).unix();
     // Using Facebook Graph API Field Expansion, that's why this is a huge URL.
     // See: https://developers.facebook.com/docs/reference/api/field_expansion/
-    var url = "https://graph.facebook.com/me?fields=name,friends.fields(events.since(" + timestamp + ").limit(25).fields(id,start_time,end_time,location,name,venue,picture.width(100).height(100).type(square)))";
+    var url = "https://graph.facebook.com/me?fields=name,friends.fields(events.since(" + timestamp + ").limit(25).fields(id,privacy,start_time,end_time,location,name,venue,picture.width(100).height(100).type(square)))";
     url += "&access_token=" + accessToken;
     
     try {
@@ -44,7 +44,7 @@ Meteor.methods({
         var events = jsonToEventList(json);
 
         _.each(events, function (ev) {
-          if (ev.name.search(protestRegex) !== -1) {  // if is a protest event
+          if (ev.privacy === 'OPEN' && ev.name.search(protestRegex) !== -1) {  // if it is an open protest event
             // convert start_time and end_time to Date
             ev.start_time = fbDateToDate(ev.start_time);
             if (ev.end_time) {
