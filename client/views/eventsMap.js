@@ -8,14 +8,16 @@ Template.eventsMap.rendered = function() {
   var infowindow = new google.maps.InfoWindow({ content: '...' });
   var markersArray = [];
   var geolocation = Geolocation.get();
+  var myPosition = null;
 
   if (geolocation && geolocation.coords && geolocation.coords.latitude && geolocation.coords.longitude) {
     var lat = geolocation.coords.latitude;
     var lng = geolocation.coords.longitude;
     map.setCenter(new google.maps.LatLng(lat, lng));
 
+    myPosition = new google.maps.LatLng(lat, lng);
     var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(lat, lng),
+      position: myPosition,
       title: 'Sua localização',
       icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
     });
@@ -26,7 +28,7 @@ Template.eventsMap.rendered = function() {
       infowindow.open(map, marker);
     });
   } else {
-    map.setCenter(new google.maps.LatLng('-15.779039', '-47.928071'));  // Brasília LatLng
+    map.setCenter(new google.maps.LatLng(-15.779039, -47.928071));  // Brasília LatLng
     map.setZoom(3);
   }
   Session.set('eventsMapRendered', true);
@@ -48,8 +50,13 @@ Template.eventsMap.rendered = function() {
       for (var i in markersArray) {
         bounds.extend(markersArray[i].getPosition());
       }
-      map.setCenter(bounds.getCenter());
-      map.fitBounds(bounds);
+      if (bounds.length) {
+        if (myPosition) {
+          bounds.extend(myPosition);
+        }
+        map.setCenter(bounds.getCenter());
+        map.fitBounds(bounds);
+      }
     }
   };
 
