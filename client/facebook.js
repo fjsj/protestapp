@@ -46,12 +46,6 @@ Facebook = (function () {
       Session.set(k, null);
     });
     sessionKeys = {};
-
-    // Flush HTTP cache
-    try {
-      ClientStore.flush();
-    } catch (e) {
-    }
   };
 
   var getAccessToken = function () {
