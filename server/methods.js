@@ -6,8 +6,8 @@ var fbDateToDate = function (fbDate) {
   }
   return fbDateMoment.toDate();
 };
-var protestRegex = /protesto|protesta|manifestação|reforma|movimento |luta | ato |greve|paralização|boicote|revolução|revolta|ocupa|marcha|impeachment|vem pra rua|vem para as ruas|massa crítica|direitos urbanos|primavera brasileira|#vemprarua|#changebrazil|#forafeliciano|pec37|pec 37|pec33|pec 33|cura gay|curagay|anonymous/i;
-var spamRegex = /m\.oliveira1979\@bol\.com\.br|serasa/i;
+var protestRegex = /protesto|protesta|manifestação|manifestacao|reforma|movimento |luta | ato |greve|paralização|paralizacao|mobilização|mobilizacao|boicote|revolução|revolucao|revolta|ocupa|marcha|impeachment|plenária|plenaria|vem pra rua|vem para as ruas|massa crítica|massa critica|direitos urbanos|primavera brasileira|vemprarua|changebrazil|forafeliciano|pec37|pec 37|pec33|pec 33|pec99|pec 99|cura gay|curagay|anonymous/i;
+var spamRegex = /m\.oliveira1979\@bol\.com\.br|serasa|aniversário |aniversario |\bfesta/i;
 var jsonToEventList = function (json) {
   var eventsIds = {}; // id hashset to avoid event repetition
   var events = [];
@@ -46,8 +46,9 @@ Meteor.methods({
 
         _.each(events, function (ev) {
           if (ev.privacy === 'OPEN' &&  // if it is public...
+              ev.name.search(spamRegex) === -1 &&  // and is not spam...
               ev.name.search(protestRegex) !== -1 &&  // and is a protest...
-              ev.location || ev.venue) {  // and has a location or venue.
+              (ev.location || ev.venue)) {  // and has a location or venue.
             // convert start_time and end_time to Date
             ev.start_time = fbDateToDate(ev.start_time);
             if (ev.end_time) {
