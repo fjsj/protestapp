@@ -16,4 +16,6 @@ Meteor.publish("all-events", function () {
   return Events.find();
 });
 
-Events._ensureIndex({ lnglat: '2dsphere' });
+Meteor.startup(function () {
+  Events._ensureIndex({ lnglat: '2dsphere' });
+});
