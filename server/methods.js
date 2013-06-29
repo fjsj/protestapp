@@ -7,6 +7,7 @@ var fbDateToDate = function (fbDate) {
   return fbDateMoment.toDate();
 };
 var protestRegex = /protesto|protesta|manifestação|reforma|movimento |luta | ato |greve|paralização|boicote|revolução|revolta|ocupa|marcha|impeachment|vem pra rua|vem para as ruas|massa crítica|direitos urbanos|primavera brasileira|#vemprarua|#changebrazil|#forafeliciano|pec37|pec 37|pec33|pec 33|cura gay|curagay|anonymous/i;
+var spamRegex = /m\.oliveira1979\@bol\.com\.br|serasa/i;
 var jsonToEventList = function (json) {
   var eventsIds = {}; // id hashset to avoid event repetition
   var events = [];
@@ -44,7 +45,9 @@ Meteor.methods({
         var events = jsonToEventList(json);
 
         _.each(events, function (ev) {
-          if (ev.privacy === 'OPEN' && ev.name.search(protestRegex) !== -1) {  // if it is an open protest event
+          if (ev.privacy === 'OPEN' &&  // if it is public...
+              ev.name.search(protestRegex) !== -1 &&  // and is a protest...
+              ev.location || ev.venue) {  // and has a location or venue.
             // convert start_time and end_time to Date
             ev.start_time = fbDateToDate(ev.start_time);
             if (ev.end_time) {
