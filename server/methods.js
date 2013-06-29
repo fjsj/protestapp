@@ -31,10 +31,11 @@ Meteor.methods({
     check(accessToken, String);
     this.unblock();
 
-    var timestamp = moment().startOf("day").subtract("months", 1).unix();
+    var since = moment().startOf("day").subtract("months", 1).unix();
+    var until = moment().startOf("day").add("months", 1).unix();
     // Using Facebook Graph API Field Expansion, that's why this is a huge URL.
     // See: https://developers.facebook.com/docs/reference/api/field_expansion/
-    var url = "https://graph.facebook.com/me?fields=name,friends.fields(events.since(" + timestamp + ").limit(25).fields(id,privacy,start_time,end_time,location,name,venue,picture.width(100).height(100).type(square)))";
+    var url = "https://graph.facebook.com/me?fields=name,friends.fields(events.since(" + since + ").until(" + until + ").limit(25).fields(id,privacy,start_time,end_time,location,name,venue,picture.width(100).height(100).type(square)))";
     url += "&access_token=" + accessToken;
     
     try {
