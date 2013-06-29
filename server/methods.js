@@ -7,7 +7,7 @@ var fbDateToDate = function (fbDate) {
   return fbDateMoment.toDate();
 };
 var protestRegex = /protesto|protesta|manifestação|manifestacao|reforma|movimento |luta | ato |greve|paralização|paralizacao|mobilização|mobilizacao|boicote|revolução|revolucao|revolta|ocupa|marcha|impeachment|plenária|plenaria|vem pra rua|vem para as ruas|massa crítica|massa critica|direitos urbanos|primavera brasileira|vemprarua|changebrazil|pec37|pec 37|pec33|pec 33|pec99|pec 99|cura gay|curagay|anonymous|fora renan|forarenan|fora feliciano|forafeliciano/i;
-var spamRegex = /m\.oliveira1979\@bol\.com\.br|serasa|aniversário |aniversario |\bfesta/i;
+var spamRegex = /m\.oliveira1979\@bol\.com\.br|serasa|aniversário |aniversario |\bfesta|\bpeaches|\bcaralho/i;
 var jsonToEventList = function (json) {
   var eventsIds = {}; // id hashset to avoid event repetition
   var events = [];
