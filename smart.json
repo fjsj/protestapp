@@ -1,7 +1,6 @@
 {
   "packages": {
     "moment": {},
-    "page-js": {},
     "router": {}
   }
 }

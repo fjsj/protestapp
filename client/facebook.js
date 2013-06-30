@@ -77,7 +77,24 @@ Facebook = (function () {
       }
     };
     
-    Meteor.http.get(url, {timeout: 30000}, verifyAndCallback);
+    // if is Internet Explorer, use jsonp for cross-site requests
+    if (ieVersion) {
+      $.ajax({
+        url: url,
+        timeout: 30000,
+        dataType: 'jsonp',
+        success: function (data, textStatus, jqXHR) {
+          verifyAndCallback({}, {
+            statusCode: jqXHR.status,
+            content: JSON.stringify(data)
+          });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+      });
+    } else {
+      Meteor.http.get(url, {timeout: 30000}, verifyAndCallback);
+    }
   };
 
   var fetchAndStoreEvents = function () {
