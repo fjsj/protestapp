@@ -1,7 +1,8 @@
 Tests.add (APP_ACCESS_TOKEN) ->
   eventDt = moment().format "YYYY-MM-DDThh:mm:ssZZ"
 
-  # See: https://developers.facebook.com/docs/test_users/
+  # Helper functions.
+  # For docs on Facebook test users, see: https://developers.facebook.com/docs/test_users/
   fetchTestUsers = (callback) ->
     url = "https://graph.facebook.com/#{AppConfig.appId}/accounts/test-users?access_token=#{APP_ACCESS_TOKEN}"
     Meteor.http.get url, {timeout: 30000}, (error, result) ->
@@ -12,7 +13,7 @@ Tests.add (APP_ACCESS_TOKEN) ->
     url = "https://graph.facebook.com/#{AppConfig.appId}/accounts/test-users?"
     urlParams = {
       "installed": "true",
-      "name": "Test evee User",
+      "name": "Test protestapp User",
       "locale": "en_US",
       "permissions": "create_event,user_events,friends_events",
       "method": "post",
@@ -34,9 +35,10 @@ Tests.add (APP_ACCESS_TOKEN) ->
     headers = {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"}
     url = "https://graph.facebook.com/#{user.id}/events"
     params = {
-      "name": "Test Event",
+      "name": "Test Protest Event #changebrazil",
       "start_time": eventDt,
-      "access_token": user.access_token
+      "access_token": user.access_token,
+      "location": "Av. Boa Viagem, Recife, Brasil"
     }
     Meteor.http.post url, {headers: headers, params: params, timeout: 30000}, (error, result) ->
       json = JSON.parse result.content
@@ -56,42 +58,25 @@ Tests.add (APP_ACCESS_TOKEN) ->
     @.timeout 5 * 60 * 1000  # 5 minutes suit timeout
 
     before (done) ->
-      throw new Error "Invalid access token" unless APP_ACCESS_TOKEN
+      throw new Error "Empty access token" unless APP_ACCESS_TOKEN
 
-      fetchTestUsers (json) ->
-        if json.data.length >= 2
-          user1 = json.data[0]
-          user2 = json.data[1]
+      addTestUser (json) ->
+        user1 = json
+        addTestUser (json) ->
+          user2 = json
           addFriendship user1, user2, ->
             addEventOnTestUser user2, (json) ->
               eventId = json.id
               done()
-        else if json.data.length == 1
-          user1 = json.data[0]
-          addTestUser (json) ->
-            user2 = json
-            addFriendship user1, user2, ->
-              addEventOnTestUser user2, (json) ->
-                eventId = json.id
-                done()
-        else
-          addTestUser (json) ->
-            user1 = json
-            addTestUser (json) ->
-              user2 = json
-              addFriendship user1, user2, ->
-                addEventOnTestUser user2, (json) ->
-                  eventId = json.id
-                  done()
 
     beforeEach ->
+      Geolocation.setShowAll(true);
       Facebook.logout()
-      ClientStore.flush()
-
+      
     afterEach ->
+      Geolocation.setShowAll(true);
       Facebook.logout()
-      ClientStore.flush()
-
+      
     describe '#login()', ->
       it 'should set accessToken', ->
         Facebook.login user1.access_token
@@ -105,8 +90,9 @@ Tests.add (APP_ACCESS_TOKEN) ->
         Meteor.autorun ->
           try
             eventDtAsKey = moment(eventDt, "YYYY-MM-DDThh:mm:ssZZ").format SelectedDate.getKeyFormat()
-            fbEvents = Facebook.getEventsByDate eventDtAsKey
-            if fbEvents
+            fbEventsCursor = Facebook.getEventsByDate(eventDtAsKey)
+            if fbEventsCursor.count()
+              fbEvents = fbEventsCursor.fetch()
               expect(fbEvents).to.be.an.instanceof Array
               expect(fbEvents).to.have.length 1
               expect(fbEvents[0].id).to.be.equal eventId
