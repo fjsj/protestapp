@@ -7,10 +7,6 @@ Template.fbLogin.created = function () {
 
 /*
  * Current user template variables.
- *
- * Reactive context! Values are updated automatically,
- * since Facebook namespace uses Meteor Session internaly,
- * which is a reactive data source.
  */
 Template.fbLogin.userName = function () {
   return Facebook.getUserName() || '';
@@ -21,16 +17,14 @@ Template.fbLogin.userName = function () {
  * Clicking in #login-button opens the Facebook JavaScript SDK login pop-up.
  * Clicking in #logout-button logs out the user from Facebook and from this app.
  */
-(function () {
-  Template.fbLogin.events({
-    "click #login-button": function () {
-      FacebookViewHelper.showLoginPopup();
-    },
-    "click #logout-button": function () {
-      FB.logout(function(response) {
-        // logged out
-      });
-      Facebook.logout();
-    }
-  });
-}());
+Template.fbLogin.events({
+  "click #login-button": function () {
+    FacebookViewHelper.showLoginPopup();
+  },
+  "click #logout-button": function () {
+    FB.logout(function(response) {
+      // logged out
+    });
+    Facebook.logout();
+  }
+});

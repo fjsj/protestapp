@@ -7,11 +7,6 @@ Template.todayEvents.rendered = function() {
 
 /*
  * Template context of selected date events.
- *
- * Reactive context! Values are updated automatically,
- * since SelectedDate and Facebook namespaces
- * use Meteor Session internaly,
- * which is a reactive data source.
  */
 Template.todayEvents.todayContext = function () {
   var todayKey = SelectedDate.getAsKey();
@@ -27,11 +22,6 @@ Template.todayEvents.todayContext = function () {
 
 /*
  * Template context of selected date (plus 1 day) events.
- *
- * Reactive context! Values are updated automatically,
- * since SelectedDate and Facebook namespaces
- * use Meteor Session internaly,
- * which is a reactive data source.
  */
 Template.tomorrowEvents.tomorrowContext = function () {
   var todayKey = SelectedDate.getAsKey();

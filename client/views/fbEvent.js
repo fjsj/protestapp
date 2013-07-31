@@ -15,10 +15,6 @@ Template.fbEvent.rendered = function () {
 /*
  * Description template variable.
  * This variable is updated as soon as event description is fully fetched.
- *
- * Reactive context! Values are updated automatically,
- * since Facebook namespace uses Meteor Session internaly,
- * which is a reactive data source.
  */
 Template.fbEvent.description = function () {
   return Facebook.getEventDescription(this.id);
@@ -27,10 +23,6 @@ Template.fbEvent.description = function () {
 /*
  * Attendee count template variable.
  * This variable is updated as soon as event attendee count is fully fetched.
- *
- * Reactive context! Values are updated automatically,
- * since Facebook namespace uses Meteor Session internaly,
- * which is a reactive data source.
  */
 Template.fbEvent.attendeeCount = function () {
   return Facebook.getEventAttendeeCount(this.id);
@@ -39,10 +31,6 @@ Template.fbEvent.attendeeCount = function () {
 /*
  * Attendees template variable.
  * This variable is updated as soon as event attendees are fully fetched.
- *
- * Reactive context! Values are updated automatically,
- * since Facebook namespace uses Meteor Session internaly,
- * which is a reactive data source.
  */
 Template.fbEvent.attendees = function () {
   return Facebook.getEventAttendees(this.id);
@@ -51,10 +39,6 @@ Template.fbEvent.attendees = function () {
 /*
  * Male ratio template variable.
  * This variable is updated as soon as event attendees are fully fetched.
- *
- * Reactive context! Values are updated automatically,
- * since Facebook namespace uses Meteor Session internaly,
- * which is a reactive data source.
  */
 Template.fbEvent.maleRatio = function () {
   var attendees = Facebook.getEventAttendees(this.id);
