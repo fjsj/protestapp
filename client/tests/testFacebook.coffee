@@ -1,4 +1,4 @@
-Tests.add (APP_ACCESS_TOKEN) ->
+this.Tests.add (APP_ACCESS_TOKEN) ->
   eventDt = moment().format "YYYY-MM-DDThh:mm:ssZZ"
 
   # Helper functions.
