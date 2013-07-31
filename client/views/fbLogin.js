@@ -2,7 +2,7 @@
  * Loads the Facebook JavaScript SDK when fbLogin template is created.
  */
 Template.fbLogin.created = function () {
-  ViewHelper.initializeFacebookSDK();
+  FacebookViewHelper.initializeSDK();
 };
 
 /*
@@ -24,7 +24,7 @@ Template.fbLogin.userName = function () {
 (function () {
   Template.fbLogin.events({
     "click #login-button": function () {
-      ViewHelper.showLoginPopup();
+      FacebookViewHelper.showLoginPopup();
     },
     "click #logout-button": function () {
       FB.logout(function(response) {

@@ -269,10 +269,76 @@ Facebook = (function () {
   };
 }());
 
+/*
+ * isLogged template helper.
+ * Let template code know if user is logged.
+ */
 Handlebars.registerHelper("isLogged", function () {
   return Facebook.getAccessToken() !== null;
 });
 
+/*
+ * loadingEventsCollection template helper.
+ * Let template code know if events are loading.
+ */
 Handlebars.registerHelper("loadingEventsCollection", function () {
   return Session.get('loadingEventsCollection');
 });
+
+/**
+ * Facebook view helper to use in JS view code. 
+ * Exposes a function to initialize Facebook JS SDK and another function to show Facebook login popup.
+ */
+FacebookViewHelper = (function () {
+  var initializeSDK = function () {
+    // See Facebook JavaScript JDK docs at: https://developers.facebook.com/docs/reference/javascript/
+    window.fbAsyncInit = function() {
+      // Init the FB JS SDK
+      var initConfig = {
+        appId      : AppConfig.appId, // App ID from the App Dashboard
+        status     : false, // check the login status upon init?
+        cookie     : false, // set sessions cookies to allow your server to access the session?
+        xfbml      : false  // parse XFBML tags on this page?
+      };
+      if (!AppConfig.isLocalhost) { // Serve channel.html file only on production
+        initConfig["channelUrl"] = Meteor.absoluteUrl("fb/channel.html");
+      }
+      FB.init(initConfig);
+
+      // Sync Facebook login status with this app login status (automatically logging in if necessary).
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          Facebook.login(response.authResponse.accessToken);
+        } else if (response.status === 'not_authorized') {
+          // not_authorized
+        } else {
+          // not_logged_in
+        }
+      });
+    };
+
+    // Load the SDK's source Asynchronously
+    (function(d, debug){
+       var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement('script'); js.id = id; js.async = true;
+       js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+       ref.parentNode.insertBefore(js, ref);
+     }(document, /*debug*/ false));
+  };
+
+  var showLoginPopup = function () {
+    FB.login(function(response) {
+      if (response.authResponse) {
+        Facebook.login(response.authResponse.accessToken);
+      } else {
+        // cancelled
+      }
+    }, {scope: 'user_events,friends_events'});
+  };
+
+  return {
+    initializeSDK: initializeSDK,
+    showLoginPopup: showLoginPopup
+  };
+}());

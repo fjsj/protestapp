@@ -36,3 +36,12 @@ I18N = (function () {
     setLanguage: setLanguage
   };
 }());
+
+/*
+ * formatDate template helper.
+ * Converts from Date to local (current language) time and date format string.
+ */
+Handlebars.registerHelper('formatDate', function (value) {
+  var localFormat = I18N.getDateFormat();
+  return moment(value).format("HH:mm " + localFormat);
+});

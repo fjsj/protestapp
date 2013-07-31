@@ -2,7 +2,7 @@
  * Loads the Facebook JavaScript SDK when fbEvent template is created.
  */
 Template.fbEvent.created = function () {
-  ViewHelper.initializeFacebookSDK();
+  FacebookViewHelper.initializeSDK();
 };
 
 /*
@@ -76,7 +76,7 @@ Template.fbEvent.maleRatio = function () {
  */
 Template.fbEvent.events({
   "click .btn-login": function () {
-    ViewHelper.showLoginPopup();
+    FacebookViewHelper.showLoginPopup();
   }
 });
 
