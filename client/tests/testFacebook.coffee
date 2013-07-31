@@ -87,7 +87,7 @@ this.Tests.add (APP_ACCESS_TOKEN) ->
       it 'should automatically fetch friends events', (done) ->
         Facebook.login user1.access_token
 
-        Meteor.autorun ->
+        Deps.autorun ->
           try
             eventDtAsKey = moment(eventDt, "YYYY-MM-DDThh:mm:ssZZ").format SelectedDate.getKeyFormat()
             fbEventsCursor = Facebook.getEventsByDate(eventDtAsKey)

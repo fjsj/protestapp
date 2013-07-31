@@ -121,7 +121,7 @@ Facebook = (function () {
   };
 
   Events = new Meteor.Collection("events");
-  Meteor.autorun(function () {
+  Deps.autorun(function () {
     var geolocation = Geolocation.get();
     var showAll = Geolocation.getShowAll();
 
@@ -253,7 +253,7 @@ Facebook = (function () {
    * Rerun fetchAndStoreEvents when its dependencies are updated! Meteor deps magic!
    * See: http://docs.meteor.com/#deps_autorun
    */
-  Meteor.autorun(fetchAndStoreEvents);
+  Deps.autorun(fetchAndStoreEvents);
 
   return {
     getFbDateFormats: getFbDateFormats,

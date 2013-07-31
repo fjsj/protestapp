@@ -1,3 +1,6 @@
+/*
+ * Rendering of events map. Using Google Maps JavaScript API V3.
+ */
 Template.eventsMap.rendered = function() {
   var mapOptions = {
     zoom: 12,
@@ -10,12 +13,13 @@ Template.eventsMap.rendered = function() {
   var geolocation = Geolocation.get();
   var myPosition = null;
 
+  // If user geolocation was found, center map in it and add a marker with it to the map.
   if (geolocation && geolocation.coords && geolocation.coords.latitude && geolocation.coords.longitude) {
     var lat = geolocation.coords.latitude;
     var lng = geolocation.coords.longitude;
-    map.setCenter(new google.maps.LatLng(lat, lng));
-
     myPosition = new google.maps.LatLng(lat, lng);
+    map.setCenter(myPosition);
+
     var marker = new google.maps.Marker({
       position: myPosition,
       title: 'Sua localização',
@@ -28,13 +32,15 @@ Template.eventsMap.rendered = function() {
       infowindow.open(map, marker);
     });
   } else {
+    // Since user geolocation isn't available, center map in Brazil capital.
     map.setCenter(new google.maps.LatLng(-15.779039, -47.928071));  // Brasília LatLng
     map.setZoom(3);
   }
   Session.set('eventsMapRendered', true);
 
+  // Start of helper functions to use in map updates.
   var clearMarkers = function () {
-    // based on: https://developers.google.com/maps/documentation/javascript/overlays#RemovingOverlays
+    // Based on: https://developers.google.com/maps/documentation/javascript/overlays#RemovingOverlays
     if (markersArray) {
       for (var i in markersArray) {
         markersArray[i].setMap(null);
@@ -59,7 +65,12 @@ Template.eventsMap.rendered = function() {
       }
     }
   };
+  // End of helper functions to use in map updates.
 
+  /*
+   * Automatically updates map when user login status change or when listed events change.
+   * See: http://docs.meteor.com/#deps_autorun
+   */
   Deps.autorun(function () {
     var isRendered = Session.get('eventsMapRendered');
     var isLogged = Facebook.getAccessToken();
