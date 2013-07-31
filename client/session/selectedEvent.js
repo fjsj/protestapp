@@ -29,7 +29,7 @@ SelectedEvent = (function () {
 
 /*
  * selectedEvent template helper.
- * Lets template code to get the currently selected event (if exists).
+ * Let template code to get the currently selected event (if exists).
  */
 Handlebars.registerHelper("selectedEvent", function () {
   return SelectedEvent.get();
