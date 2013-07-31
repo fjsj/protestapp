@@ -1,5 +1,5 @@
 // From: https://gist.github.com/padolsey/527683
-ieVersion = (function() {
+IE_VERSION = (function() {
   var undef,
     v = 3,
     div = document.createElement('div'),

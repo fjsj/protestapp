@@ -78,7 +78,7 @@ Facebook = (function () {
     };
     
     // if is Internet Explorer, use jsonp for cross-site requests
-    if (ieVersion) {
+    if (IE_VERSION) {
       $.ajax({
         url: url,
         timeout: 30000,
