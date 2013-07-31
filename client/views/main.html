@@ -35,7 +35,7 @@
 
       <div class="row-steps-fluid">
         <div class="step-header-full step3">
-          <h3>Passo 3: confira os eventos {{#if isLogged}}{{#if geolocation}}<button id="show-near" class="btn btn-success btn-small pull-right">Mostrar por perto</button><button id="show-all" class="btn btn-primary btn-small pull-right">Mostrar todos</button>{{/if}}{{/if}}</h3>
+          <h3>Passo 3: confira os eventos {{> eventsFilter}}</h3>
           {{#unless geolocation}}
             <h4>(para maior precisão, aceite a permissão para mostrar sua localização)</h4>
           {{/unless}}
