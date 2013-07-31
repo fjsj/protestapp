@@ -3,7 +3,7 @@
  * Clicking in #show-near will show only nearby geolocation events.
  * Clicking in #show-all will show all events.
  */
-Template.main.events({
+Template.eventsFilter.events({
   "click #show-near": function () {
     Geolocation.setShowAll(false);
   },
