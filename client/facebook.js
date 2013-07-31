@@ -15,7 +15,7 @@
  * getEventDescription and getEventAttendeeCount returns event description and attendeeCount if they were already fetched.
  * 
  * Events objects are fetched automatically every time access token changes,
- * since the internal fetchAndStoreEvents function is in a autorun context.
+ * since the internal fetchEvents function is in a autorun context.
  */
 Facebook = (function () {
   var fbDateFormats = ["YYYY-MM-DDThh:mm:ssZZ", "YYYY-MM-DD", "YYYY-MM-DDThh:mm:ss"];
@@ -68,7 +68,7 @@ Facebook = (function () {
       if (result.statusCode == 400) {
         var json = JSON.parse(result.content);
         // Invalid request! Expired accessToken.
-        // Page refresh is necessary, to reload Facebook JavaScript SDK.
+        // Page refresh is necessary to reload Facebook JavaScript SDK.
         if (json.error.type == "OAuthException") {
           window.location.reload();
         }
@@ -77,7 +77,7 @@ Facebook = (function () {
       }
     };
     
-    // if is Internet Explorer, use jsonp for cross-site requests
+    // if is Internet Explorer use jsonp for cross-site requests
     if (IE_VERSION) {
       $.ajax({
         url: url,
@@ -97,11 +97,12 @@ Facebook = (function () {
     }
   };
 
-  var fetchAndStoreEvents = function () {
+  var fetchEvents = function () {
     var accessToken = getAccessToken();
     if (accessToken !== null) {
       var url = "https://graph.facebook.com/me?fields=name";
       url += "&access_token=" + accessToken;
+      
       facebookHttpGet(url, function (error, result) {
         if (result.statusCode === 200) {
           var json = JSON.parse(result.content);
@@ -112,7 +113,12 @@ Facebook = (function () {
           if (geolocation && !showAll) {
             Session.set('loadingEventsCollection', true);
           }
-          Meteor.call('insertEvents', accessToken, function () {
+          /* 
+           * Meteor server method 'fetchEvents' will fetch events from Facebook.
+           * Events collection will be populated after this method is done.
+           * See server/methods.js
+           */
+          Meteor.call('fetchEvents', accessToken, function () {
             Session.set('loadingEventsCollection', false);
           });
         }
@@ -120,7 +126,19 @@ Facebook = (function () {
     }
   };
 
+  /*
+   * Rerun fetchEvents when access token changes.
+   * See: http://docs.meteor.com/#deps_autorun
+   */
+  Deps.autorun(fetchEvents);
+
+  // Events collection which will be populated by 'fetchEvents' server method.
   Events = new Meteor.Collection("events");
+  
+  /*
+   * Rerun Meteor.subscribe over events to change visible Events if geolocation or showAll option changes.
+   * See: http://docs.meteor.com/#deps_autorun
+   */
   Deps.autorun(function () {
     var geolocation = Geolocation.get();
     var showAll = Geolocation.getShowAll();
@@ -248,12 +266,6 @@ Facebook = (function () {
     return sessionGetOrNull("attendeeCount" + id);
   };
   // End of functions related to event attendee count
-
-  /*
-   * Rerun fetchAndStoreEvents when its dependencies are updated! Meteor deps magic!
-   * See: http://docs.meteor.com/#deps_autorun
-   */
-  Deps.autorun(fetchAndStoreEvents);
 
   return {
     getFbDateFormats: getFbDateFormats,

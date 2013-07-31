@@ -27,7 +27,7 @@ var jsonToEventList = function (json) {
 };
 
 Meteor.methods({
-  insertEvents: function (accessToken) {
+  fetchEvents: function (accessToken) {
     check(accessToken, String);
     this.unblock();
 
