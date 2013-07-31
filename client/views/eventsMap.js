@@ -76,11 +76,11 @@ Template.eventsMap.rendered = function() {
     var isLogged = Facebook.getAccessToken();
 
     if (isRendered && isLogged) {
-      var todayKey = SelectedDate.getAsKey();
-      if (todayKey) {
-        var tomorrowKey = SelectedDate.getTomorrowAsKey();
-        var todayEvents = Facebook.getEventsByDate(todayKey).fetch();
-        var tomorrowEvents = Facebook.getEventsByDate(tomorrowKey).fetch();
+      var today = SelectedDate.getAsMoment();
+      if (today) {
+        var tomorrow = SelectedDate.getTomorrowAsMoment();
+        var todayEvents = Facebook.getEventsByDate(today).fetch();
+        var tomorrowEvents = Facebook.getEventsByDate(tomorrow).fetch();
 
         clearMarkers();
         var addMarker = function (ev, isToday) {

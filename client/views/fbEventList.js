@@ -9,11 +9,11 @@ Template.todayEvents.rendered = function() {
  * Template context of selected date events.
  */
 Template.todayEvents.todayContext = function () {
-  var todayKey = SelectedDate.getAsKey();
-  if (todayKey) {
+  var today = SelectedDate.getAsMoment();
+  if (today) {
     return {
       'currentDate': SelectedDate.getFormatted(),
-      'fbEvents': Facebook.getEventsByDate(todayKey)
+      'fbEvents': Facebook.getEventsByDate(today)
     };
   } else {
     return null;
@@ -24,12 +24,11 @@ Template.todayEvents.todayContext = function () {
  * Template context of selected date (plus 1 day) events.
  */
 Template.tomorrowEvents.tomorrowContext = function () {
-  var todayKey = SelectedDate.getAsKey();
-  if (todayKey) {
-    var tomorrowKey = SelectedDate.getTomorrowAsKey();
+  var tomorrow = SelectedDate.getTomorrowAsMoment();
+  if (tomorrow) {
     return {
       'currentDate': SelectedDate.getTomorrowFormatted(),
-      'fbEvents': Facebook.getEventsByDate(tomorrowKey)
+      'fbEvents': Facebook.getEventsByDate(tomorrow)
     };
   } else {
     return null;

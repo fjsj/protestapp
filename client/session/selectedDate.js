@@ -1,7 +1,6 @@
 /**
  * SelectedDate namespace.
  * Exposes functions that get and set the currently selected date.
- * Also exposes a keyFormat for using in dates->events maps.
  *
  * Since getter functions use Meteor Session internally,
  * if they are used in reactive contexts, their returned values are updated automagically.
@@ -11,34 +10,30 @@
 SelectedDate = (function () {
   var keyFormat = "YYYY-MM-DD";
 
-  var getKeyFormat = function () {
-    return keyFormat;
-  };
-
   var getAsKey = function () {
     return Session.get("selectedDate");
   };
 
   var getAsMoment = function () {
-    return moment.utc(getAsKey(), keyFormat);
+    var asKey = getAsKey();
+    return asKey ? moment.utc(asKey, keyFormat) : null;
   };
   
   var getFormatted = function () {
+    var asMoment = getAsMoment();
     var localFormat = I18N.getDateFormat();
-    return getAsMoment().format(localFormat);
+    return asMoment ? asMoment.format(localFormat) : null;
   };
 
   var getTomorrowAsMoment = function () {
-    return getAsMoment().add("days", 1);
-  };
-
-  var getTomorrowAsKey = function () {
-    return getTomorrowAsMoment().format(keyFormat);
+    var asMoment = getAsMoment();
+    return asMoment ? asMoment.add("days", 1) : null;
   };
 
   var getTomorrowFormatted = function () {
+    var tomorrowAsMoment = getTomorrowAsMoment();
     var localFormat = I18N.getDateFormat();
-    return getTomorrowAsMoment().format(localFormat);
+    return tomorrowAsMoment ? tomorrowAsMoment.format(localFormat) : null;
   };
 
   var setAsMoment = function (asMoment) {
@@ -47,10 +42,9 @@ SelectedDate = (function () {
   setAsMoment(moment());
  
   return {
-    getKeyFormat: getKeyFormat,
-    getAsKey: getAsKey,
+    getAsMoment: getAsMoment,
     getFormatted: getFormatted,
-    getTomorrowAsKey: getTomorrowAsKey,
+    getTomorrowAsMoment: getTomorrowAsMoment,
     getTomorrowFormatted: getTomorrowFormatted,
     setAsMoment: setAsMoment
   };

@@ -89,8 +89,8 @@ this.Tests.add (APP_ACCESS_TOKEN) ->
 
         Deps.autorun ->
           try
-            eventDtAsKey = moment(eventDt, "YYYY-MM-DDThh:mm:ssZZ").format SelectedDate.getKeyFormat()
-            fbEventsCursor = Facebook.getEventsByDate(eventDtAsKey)
+            eventDtAsMoment = moment(eventDt, "YYYY-MM-DDThh:mm:ssZZ")
+            fbEventsCursor = Facebook.getEventsByDate(eventDtAsMoment)
             if fbEventsCursor.count()
               fbEvents = fbEventsCursor.fetch()
               expect(fbEvents).to.be.an.instanceof Array
