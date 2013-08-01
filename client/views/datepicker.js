@@ -47,7 +47,7 @@ Template.datepicker.rendered = function () {
   /*
    * Sets datepicker value to current SelectedDate.
    */
-  $datepickerInput.val(SelectedDate.getFormatted());
+  $datepicker.datepicker('setDate', SelectedDate.getAsMoment().toDate());
 
   /*
    * Updates SelectedDate when datepicker date is changed.
